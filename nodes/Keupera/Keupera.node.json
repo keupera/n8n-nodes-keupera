@@ -1,0 +1,19 @@
+{
+	"node": "n8n-nodes-keupera.keupera",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing", "Productivity"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.keupera.com/api-reference/introduction"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.keupera.com/api-reference/introduction"
+			}
+		]
+	},
+	"alias": ["seo", "keywords", "backlinks", "content", "ai visibility", "search console", "brand radar"]
+}
