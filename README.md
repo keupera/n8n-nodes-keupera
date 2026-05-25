@@ -1,6 +1,6 @@
 # n8n-nodes-keupera
 
-An [n8n](https://n8n.io) community node for the [Keupera](https://keupera.com) SEO & AI-visibility platform.
+An [n8n](https://n8n.io) community node for the [Keupera](https://keupera.com) SEO, GEO and AI Visibility platform.
 
 ## Resources
 
@@ -19,7 +19,7 @@ This node uses an **API Key** (Bearer token). Obtain your key from the [Keupera 
 
 ## Compatibility
 
-- n8n >= 1.0.0
+- n8n >= 2.21.7
 - Requires a Keupera paid subscription with API access enabled.
 
 ## API Reference
