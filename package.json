@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-keupera",
   "version": "0.1.0",
-  "description": "n8n community node for the Keupera SEO & AI-visibility platform",
+  "description": "n8n community node for the Keupera SEO, GEO and AI Visibility platform",
   "license": "MIT",
   "homepage": "https://keupera.com",
   "keywords": [
