@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-keupera",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community node for the Keupera SEO, GEO and AI Visibility platform",
   "license": "MIT",
   "homepage": "https://keupera.com",
@@ -13,7 +13,10 @@
     "content",
     "ai-visibility"
   ],
-  "author": { "name": "Keupera", "email": "ask@support.keupera.com" },
+  "author": {
+    "name": "Keupera",
+    "email": "ask@support.keupera.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/keupera/n8n-nodes-keupera.git"
@@ -27,12 +30,18 @@
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
-    "credentials": ["dist/credentials/KeuperaApi.credentials.js"],
-    "nodes": ["dist/nodes/Keupera/Keupera.node.js"]
+    "credentials": [
+      "dist/credentials/KeuperaApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Keupera/Keupera.node.js"
+    ]
   },
   "devDependencies": {
     "@n8n/node-cli": "*",
@@ -41,5 +50,7 @@
     "release-it": "20.0.1",
     "typescript": "5.9.3"
   },
-  "peerDependencies": { "n8n-workflow": "*" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }
