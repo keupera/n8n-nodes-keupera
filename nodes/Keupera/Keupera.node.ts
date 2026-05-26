@@ -15,7 +15,7 @@ export class Keupera implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + " · " + $parameter["resource"]}}',
-		description: 'Interact with the Keupera SEO & AI-visibility platform',
+		description: 'Automate your SEO, AEO and GEO with Keupera.',
 		defaults: {
 			name: 'Keupera',
 		},
