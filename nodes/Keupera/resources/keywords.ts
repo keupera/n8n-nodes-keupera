@@ -1,4 +1,51 @@
-import type { INodeProperties } from 'n8n-workflow';
+import {
+	NodeApiError,
+	type IExecuteSingleFunctions,
+	type IN8nHttpFullResponse,
+	type INodeExecutionData,
+	type INodeProperties,
+} from 'n8n-workflow';
+
+/**
+ * Map an internal Keupera job error string to a user-friendly message.
+ * Internal stack-trace-style errors (e.g. "supabase.rpc(...).catch is not a function")
+ * are unhelpful to n8n users, so we translate the most common cases.
+ */
+function friendlyJobErrorMessage(rawError: string): string {
+	const e = (rawError || '').toString();
+	if (!e) return 'Keyword research failed without an error message. Please contact support@keupera.com.';
+	if (/catch is not a function|supabase\.rpc|TypeError|ReferenceError|undefined is not/i.test(e)) {
+		return 'Keyword research failed due to an internal Keupera service error. Please retry, and if the issue persists contact support@keupera.com with the job ID.';
+	}
+	if (/exhausted|credit limit|usage cap|limit reached|quota/i.test(e)) {
+		return 'Keyword research failed because your Keupera crawl credit limit was reached. Upgrade your plan or enable metered billing in your Keupera dashboard.';
+	}
+	if (/timeout|timed out|deadline/i.test(e)) {
+		return 'Keyword research timed out. Try a smaller batch of seed keywords or retry shortly.';
+	}
+	if (/not found|404/i.test(e)) {
+		return 'Keyword research job could not be processed: a required resource was not found. Verify your Website ID and seed keywords.';
+	}
+	// Default: surface the raw error but make it readable.
+	return `Keyword research failed: ${e}`;
+}
+
+async function handlePollResearchResponse(
+	this: IExecuteSingleFunctions,
+	items: INodeExecutionData[],
+	_response: IN8nHttpFullResponse,
+): Promise<INodeExecutionData[]> {
+	for (const item of items) {
+		const job = item.json as { id?: string; status?: string; error?: string } | undefined;
+		if (job?.status === 'failed') {
+			throw new NodeApiError(this.getNode(), {
+				message: friendlyJobErrorMessage(job.error || ''),
+				description: `Job ID: ${job.id ?? 'unknown'} · Raw error: ${job.error ?? 'none'}`,
+			});
+		}
+	}
+	return items;
+}
 
 const WEBSITE_ID_DESCRIPTION =
 	'Leave empty to use the website your API key is bound to. Only set this to override and target a different website you own.';
@@ -396,7 +443,12 @@ export const keywordsFields: INodeProperties[] = [
 				method: 'GET',
 				url: '=/keywords/research/{{ $value }}',
 			},
-			output: { postReceive: [{ type: 'rootProperty', properties: { property: 'data' } }] },
+			output: {
+				postReceive: [
+					{ type: 'rootProperty', properties: { property: 'data' } },
+					handlePollResearchResponse,
+				],
+			},
 		},
 	},
 ];
