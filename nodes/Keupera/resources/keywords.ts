@@ -1,7 +1,6 @@
 import {
 	NodeApiError,
 	type IExecuteSingleFunctions,
-	type IN8nHttpFullResponse,
 	type INodeExecutionData,
 	type INodeProperties,
 } from 'n8n-workflow';
@@ -33,7 +32,6 @@ function friendlyJobErrorMessage(rawError: string): string {
 async function handlePollResearchResponse(
 	this: IExecuteSingleFunctions,
 	items: INodeExecutionData[],
-	_response: IN8nHttpFullResponse,
 ): Promise<INodeExecutionData[]> {
 	for (const item of items) {
 		const job = item.json as { id?: string; status?: string; error?: string } | undefined;
